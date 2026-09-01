@@ -54,7 +54,11 @@ class TinyCStrLexer(Lexer):
     def NUMBER(self, t):
         t.value = int(t.value)
         return t
-    
+    EQ=r'=='
+    GE=r'>='
+    LE=r'<='
+    GT=r'>'
+    LT=r'<'
     ASSIGN = r'='
     SEMICOLON = r';'
     LBRACE = r'\{'
@@ -77,10 +81,18 @@ class TinyCStrLexer(Lexer):
     # reaches the parser -- see docs/sly_help2.md #1 for why
     # this has to be function-style, not just a style preference.
     #
-    # @_(r'\d+\.\d+')
-    # def REAL_CONST(self, t):
-    #     t.value = float(t.value)
-    #     return t
+    @_(r'\d+\.\d+')
+    def REAL_CONST(self, t):
+        t.value = float(t.value)
+        return t
+    @_(r"'.'")
+    def CHAR_CONST(self,t):
+        t.value=float(t.value)
+        return t
+    @_(r'".*"')
+    def STRING_CONST(self,t):
+        t.value=t.value[1:-1]
+        return t
 
     # ------------------------------------------------------------------
     # LEVEL 2, Stage 2b -- char/string constants, relational operators
