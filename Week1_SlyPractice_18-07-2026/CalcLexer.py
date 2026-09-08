@@ -1,10 +1,6 @@
 from sly import Lexer
 class CalcLexer(Lexer):
-<<<<<<< HEAD
     literals = {'+', '-', '*', '/', '%' , '^'}
-=======
-    literals = {'+', '-', '*', '/', '%', '^'}
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
     tokens   = { NUMBER }
 
     NUMBER = r'[0-9]+'
