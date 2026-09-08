@@ -48,11 +48,6 @@ class CalcParser(Parser):
     def F(self, value):
         return value[0]
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 24e5882cb7b6d4b0e01d4bd504151c34891700d8
 lexer = CalcLexer()
 parser = CalcParser()
 inp = '1089-2^3^2*5'
