@@ -84,10 +84,6 @@ class MIPSGenerator:
         self.mips_lines.append(line)
 
     def resolve_address(self, name):
-<<<<<<< HEAD
-        offset = self.symbol_table.getSymbol(name).getOffset()
-        return f"{offset}($fp)"
-=======
         symbol=self.symbol_table.getSymbol(name)
         offset=symbol.getOffset()
         return f"{offset}($fp)"
@@ -95,7 +91,6 @@ class MIPSGenerator:
 
 
 
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
         """
         TODO(week-4): `name` is a real declared variable's name (a
         string) -- NOT a literal, NOT a TripleRef (callers only pass
@@ -105,17 +100,6 @@ class MIPSGenerator:
         Use self.symbol_table.getSymbol(name).getOffset() to get the
         integer offset, then format it as f"{offset}($fp)".
         """
-<<<<<<< HEAD
-       # raise NotImplementedError("implement MIPSGenerator.resolve_address()")
-
-    def load(self, operand, reg):
-        if is_literal(operand):
-            self.addMIPS(f"li {reg} , {operand}")
-        else:
-            self.addMIPS(f"lw {reg} , {self.resolve_address(operand)}")
-        """
-        TODO(week-4): emit ONE instruction that gets `operand`'s value
-=======
         #raise NotImplementedError("implement MIPSGenerator.resolve_address()")
 
     def load(self, operand, reg):
@@ -124,7 +108,6 @@ class MIPSGenerator:
         else:
             self.addMIPS(f"lw {reg}, {self.resolve_address(operand)}")
         """TODO(week-4): emit ONE instruction that gets `operand`'s value
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
         into `reg`.
           - If is_literal(operand) is True: emit `li reg, operand`
          0 - Otherwise (operand is a variable name string):
@@ -134,18 +117,6 @@ class MIPSGenerator:
         by reusing the already-live register from triple_index_to_reg,
         never by loading from memory.
         """
-<<<<<<< HEAD
-        # raise NotImplementedError("implement MIPSGenerator.load()")
-
-    def store(self, reg, name):
-        self.addMIPS(f"sw {reg} , {self.resolve_address(name)}")
-        self.deallocate_register(reg)
-        """
-        TODO(week-4): emit `sw reg, {self.resolve_address(name)}`, then
-        deallocate_register(reg) -- once a value has been written back
-        to a variable's slot, the register holding it is free to reuse.
-        """
-=======
 
         #raise NotImplementedError("implement MIPSGenerator.load()")
 
@@ -157,26 +128,11 @@ class MIPSGenerator:
         to a variable's slot, the register holding it is free to reuse.
     """
 
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
         #raise NotImplementedError("implement MIPSGenerator.store()")
 
        
     
     def gen_instr(self, triple):
-<<<<<<< HEAD
-        if isinstance(triple , BinOpTriple):
-            if isinstance(triple.arg1 , TripleRef):
-                src1 = self.triple_index_to_reg[triple.arg1.index]
-            else :
-                src1 = self.allocate_registers()
-                self.load(triple.arg1 , src1)
-
-            if isinstance(triple.arg2 ,TripleRef):
-                src2 = self.triple_index_to_reg[triple.arg2.index]
-            else :
-                src2 = self.allocate_registers()
-                self.load(triple.arg2 , src2)
-=======
          if isinstance(triple, BinOpTriple):
             if isinstance(triple.arg1, TripleRef):
                 src1 = self.triple_index_to_reg[triple.arg1.index]
@@ -189,7 +145,6 @@ class MIPSGenerator:
             else:
                 src2 = self.allocate_registers()
                 self.load(triple.arg2, src2)
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
 
             dest = self.allocate_registers()
             self.addMIPS(f"{MIPS_OP[triple.op]} {dest}, {src1}, {src2}")
@@ -198,70 +153,14 @@ class MIPSGenerator:
                 self.deallocate_register(src1)
             if not isinstance(triple.arg2, TripleRef):
                 self.deallocate_register(src2)
-<<<<<<< HEAD
-
-        elif isinstance(triple, AssignTriple):
-            if isinstance(triple.arg1 , TripleRef):
-                src = self.triple_index_to_reg[triple.arg1.index]
-            else :
-                src = self.allocate_registers()
-                self.load(triple.arg1 , src)
-            self.store(src, triple.dest)
-
-        elif  isinstance(triple, PrintTriple):
-=======
         
 
          elif isinstance(triple,AssignTriple):
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
             if isinstance(triple.arg1, TripleRef):
                 src = self.triple_index_to_reg[triple.arg1.index]
             else:
                 src = self.allocate_registers()
                 self.load(triple.arg1, src)
-<<<<<<< HEAD
-
-            self.addMIPS(f"move $a0, {src}")
-            self.addMIPS("li $v0, 1")
-            self.addMIPS("syscall")
-
-            if not isinstance(triple.arg1 , TripleRef):
-                self.deallocate_register(src)
-        """
-        TODO(week-4): dispatch on the triple's type and emit MIPS.
-
-          isinstance(triple, BinOpTriple):
-              For EACH of arg1, arg2:
-                - if isinstance(arg, TripleRef): reuse
-                  self.triple_index_to_reg[arg.index] directly (no new
-                  register, no load -- the value is already sitting in
-                  that register from when that earlier triple ran)
-                - else: allocate_registers(), then load(arg, that_reg)
-              dest = self.allocate_registers()
-              self.addMIPS(f"{MIPS_OP[triple.op]} {dest}, {src1}, {src2}")
-              self.triple_index_to_reg[triple.index] = dest
-              Then deallocate src1/src2 IF they were freshly allocated
-              this call (i.e. NOT a TripleRef reuse) -- a register still
-              recorded in triple_index_to_reg as another triple's live
-              result must not be freed here.
-
-          isinstance(triple, AssignTriple):
-              Resolve triple.arg1 the same way (TripleRef -> reuse;
-              else -> allocate + load), then store(that_reg, triple.dest).
-
-          isinstance(triple, PrintTriple):
-              Resolve triple.arg1 the same way into some reg, then:
-                self.addMIPS(f"move $a0, {reg}")
-                self.addMIPS("li $v0, 1")
-                self.addMIPS("syscall")
-              and deallocate reg if it was freshly allocated (not a
-              TripleRef reuse).
-
-        See docs/register_allocation_reference.md for a fully worked
-        example of this dispatch on a small triple program, including
-        exactly which registers get allocated/reused/freed at each step.
-        """
-=======
             self.store(src, triple.dest)
          elif isinstance(triple, PrintTriple):
              if isinstance(triple.arg1, TripleRef):
@@ -278,7 +177,6 @@ class MIPSGenerator:
             #self.deallocate_register(triple.arg1)
 
         
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
         #raise NotImplementedError("implement MIPSGenerator.gen_instr()")
 
     # ------------------------------------------------------------------

@@ -1,8 +1,4 @@
 int main(){
-<<<<<<< HEAD
-    a=2+3-4*5/6%7;
-=======
     a = 2+3-4*5/6%7;
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
     print a;
 }

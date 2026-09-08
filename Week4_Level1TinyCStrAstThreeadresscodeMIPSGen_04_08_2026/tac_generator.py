@@ -28,58 +28,6 @@ class TACGenerator:
         return self.program
 
     def gen_stmt(self, stmt):
-<<<<<<< HEAD
-
-        # TODO(week-4): depending on the statement's type.
-
-        #        TODO(week-4): depending on the statement's type.
-
-
-        if(isinstance(stmt, Assign)):
-            operand = self.gen_expr(stmt.expr)
-            self.program.append(AssignTriple(stmt.var.name, operand))
-
-        if(isinstance(stmt, Print)):
-            operand = self.gen_expr(stmt.expr)
-            self.program.append(PrintTriple(operand))
-
-        # raise NotImplementedError("implement TACGenerator.gen_stmt()")
-
-    def gen_expr(self, node):
-        """
-        TODO(week-4): dispatch on the expression node's type. Returns an
-        OPERAND -- a plain variable-name string, a literal's text, or a
-        TripleRef -- never an AST node and never a triple itself.
-        """
-        if(isinstance(node, Num)):
-            return str(node.value) #(nothing appended to the program)
-        if(isinstance(node, Var)):
-            return node.name #(nothing appended to the program)
-        if(isinstance(node, BinOp)):
-            left  = self.gen_expr(node.left)
-            right = self.gen_expr(node.right)
-            return self.program.append(BinOpTriple(node.op, left, right))
-
-
-   #        raise NotImplementedError("implement TACGenerator.gen_stmt()")
-
-    def gen_expr(self, node):
-        #TODO(week-4): dispatch on the expression node's type. Returns an
-        #       OPERAND -- a plain variable-name string, a literal's text, or a
-        #        TripleRef -- never an AST node and never a triple itself.
-
-        if(isinstance(node, Num)):
-            return str(node.value)
-            #                                    (nothing appended to the program)
-        if(isinstance(node, Var)):
-            return node.name
-            #                                    (nothing appended to the program)
-        if(isinstance(node, BinOp)):
-              left  = self.gen_expr(node.left)
-              right = self.gen_expr(node.right)
-              return self.program.append(BinOpTriple(node.op, left, right))
-
-=======
         if isinstance(stmt, Assign):
               operand = self.gen_expr(stmt.expr)
               self.program.append(AssignTriple(stmt.var.name, operand))
@@ -104,24 +52,14 @@ class TACGenerator:
             left  = self.gen_expr(node.left)
             right = self.gen_expr(node.right)
             return self.program.append(BinOpTriple(node.op, left, right))
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
               # append() sets the index and returns a ready TripleRef
               # for you -- that's the whole reason to use it here instead
               # of constructing BinOpTriple and a TripleRef separately.
-        """
+   
 
 
         """Note the order: fully resolve both operands (which may themselves
         recursively append triples for nested BinOps) BEFORE appending
         this node's own triple -- otherwise triples come out numbered in
         the wrong order and later TripleRefs point at the wrong thing.
-<<<<<<< HEAD
-
         """
-        # raise NotImplementedError("implement TACGenerator.gen_expr()")
-
-        #raise NotImplementedError("implement TACGenerator.gen_expr()")
-     
-=======
-        """
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1

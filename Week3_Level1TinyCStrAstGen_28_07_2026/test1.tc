@@ -1,14 +1,7 @@
 int main(){
-<<<<<<< HEAD
-    int a,b;
-    a=1;
-    b=2;
-    c=a+b;
-=======
     int a , b ;
     a = 1 ;
     b = 2 ;
     c = a + b ;
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
     print c;
 }

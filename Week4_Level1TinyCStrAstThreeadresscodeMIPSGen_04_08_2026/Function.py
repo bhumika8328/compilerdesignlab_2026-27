@@ -84,14 +84,11 @@ class Function:
         for the required call order: parse -> program.generateTripleTAC()
         -> program.compile().)
         """
-<<<<<<< HEAD
         self.localSymbolTable.assignOffsetsToSymbols()
         mips_gen = MIPSGenerator(self.localSymbolTable)
         frame_size = self.localSymbolTable.size()
         self.mipsCode = mips_gen.generate(self.tripleTACstmts.triples, frame_size)
         
-=======
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
         #raise NotImplementedError("implement Function.compile()")
 
     def getMipsCode(self):

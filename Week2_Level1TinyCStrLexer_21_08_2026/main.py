@@ -26,7 +26,7 @@ def write_tokens(source_path, out_file):
     """
     with open(source_path) as f:
         source = f.read()
-    lexer = TinyCStrLexer(error_sink=out_file)
+    lexer = TinyCStrLexer()
     for tok in lexer.tokenize(source):
         print(f"{tok.type} {tok.value} {tok.lineno}", file=out_file)
 

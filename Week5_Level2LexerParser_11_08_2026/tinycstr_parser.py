@@ -19,22 +19,13 @@ from Program import Program
 
 class TinyCStrParser(Parser):
     tokens = TinyCStrLexer.tokens
-    debugfile = 'parser.out'
 
     precedence = (
-<<<<<<< HEAD
-            ('right' , 'QUESTION' , 'COLON'),
-            ('left' , 'LT' , 'GT' , 'LE' , 'GE' , 'EQ' , 'NE'),
-            ('left', 'PLUS', 'MINUS'),
-            ('left', 'TIMES', 'DIVIDE'),
-            ('right', 'UCAST')
-=======
         ('right','QUESTION','COLON'),   
         ('left','LT','GT','LE','GE','EQ','NE'),   
         ('left', 'PLUS', 'MINUS'),
         ('left', 'TIMES', 'DIVIDE','REMAINDER'),
         ('right','UCAST')
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
         # TODO(week-5, stage-2b): relational operators less precedence than
         # arithmetic so their precedence entry must be
         # ADDED ABOVE the two lines already here, not below -- remember
@@ -95,44 +86,24 @@ class TinyCStrParser(Parser):
     def decl(self, value):
         return [SymbolTableEntry(name, DataType.INT) for name in value[1]]
 
-    @_('DOUBLE id_list SEMICOLON')
-<<<<<<< HEAD
-    def decl(self, value):
-        return [SymbolTableEntry(name, DataType.DOUBLE) for name in value[1]]
-
-    @_('CHAR id_list SEMICOLON')
-    def decl(self, value):
-        return [SymbolTableEntry(name, DataType.CHAR) for name in value[1]]
-
-    @_('STRING id_list SEMICOLON')
-    def decl(self, value):
-        return [SymbolTableEntry(name, DataType.STRING) for name in value[1]]
-
-
-=======
-    def decl(self,value):
-        return [SymbolTableEntry(name,DataType.DOUBLE) for name in value[1]]
-
-    @_('CHAR  id_list SEMICOLON')
-    def decl(self,value):
-        return [SymbolTableEntry(name,DataType.CHAR) for name in value[1]]
-    
-    @_('STRING  id_list SEMICOLON')
-    def decl(self,value):
-        return [SymbolTableEntry(name,DataType.STRING) for name in value[1]]
-    
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1
-
     # TODO(week-5, stage-2a): add a `decl` alternative for
     # `DOUBLE id_list SEMICOLON`, producing SymbolTableEntry objects
     # with DataType.DOUBLE -- same shape as the INT rule just above,
     # different keyword token and DataType value.
-  
+    @_('DOUBLE id_list SEMICOLON')
+    def decl(self,value):
+        return [SymbolTableEntry(name,DataType.DOUBLE) for name in value[1]]
 
     # TODO(week-5, stage-2b): add two more `decl` alternatives, for
     # `CHAR id_list SEMICOLON` (DataType.CHAR) and
     # `STRING id_list SEMICOLON` (DataType.STRING).
-    
+    @_('CHAR  id_list SEMICOLON')
+    def decl(self,value):
+        return [SymbolTableEntry(name,DataType.CHAR) for name in value[1]]
+    @_('STRING  id_list SEMICOLON')
+    def decl(self,value):
+        return [SymbolTableEntry(name,DataType.STRING) for name in value[1]]
+
 
 
     @_('id_list COMMA ID')
@@ -182,66 +153,14 @@ class TinyCStrParser(Parser):
     @_('expr DIVIDE expr')
     def expr(self, value):
         return BinOp('/', value[0], value[2])
-    
     @_('expr REMAINDER  expr')
     def expr(self, value):
         return BinOp('%', value[0], value[2])
 
-    @_('expr REMAINDER expr')
-    def expr(self , value):
-        return BinOp('%' , value[0] , value[2])
 
     @_('LPAREN expr RPAREN')
     def expr(self, value):
         return value[1]
-
-    @_('REAL_CONST')
-    def expr(self , value):
-        return Const(value[0] , DataType.DOUBLE)
-
-    @_('CHAR_CONST')
-    def expr(self , value):
-        return Const(value[0] , DataType.CHAR)
-    @_('STRING_CONST')
-    def expr(self , value):
-        return Const(value[0] , DataType.STRING)
-
-    @_('expr LT expr')
-    def expr(self , value):
-        return RelOp('<' , value[0] , value[2])
-
-    @_('expr GT expr')
-    def expr(self , value):
-        return RelOp('>' , value[0] , value[2])
-
-    @_('expr LE expr')
-    def expr(self , value):
-        return RelOp('<=' , value[0] , value[2])
-
-    @_('expr GE expr')
-    def expr(self , value):
-        return RelOp('>=' , value[0] , value[2])
-
-    @_('expr EQ expr')
-    def expr(self , value):
-        return RelOp('==' , value[0] , value[2])
-
-    @_('expr NE expr')
-    def expr(self , value):
-        return RelOp('!=' , value[0] , value[2])
-
-    @_('LPAREN DOUBLE RPAREN expr %prec UCAST')
-    def expr(self , value):
-        return Cast(DataType.DOUBLE, value[3])
-
-    @_('LPAREN INT RPAREN expr %prec UCAST')
-    def expr(self , value):
-        return Cast(DataType.INT, value[3])
-
-
-    @_('expr QUESTION expr COLON expr')
-    def expr(self , value):
-        return Ternary(value[0] , value[2] , value[4])
 
     # ------------------------------------------------------------------
     # LEVEL 2, Stage 2a -- real constants
@@ -249,7 +168,6 @@ class TinyCStrParser(Parser):
     # TODO(week-5, stage-2a): add an `expr` alternative for ,
     # producing Const(<value>, <doubletype>) -- REAL_CONST's token value is
     # already a Python float (the lexer converts it)
-    
     @_('REAL_CONST')
     def expr(self, value):
         return Const(value[0], DataType.DOUBLE)
@@ -298,22 +216,27 @@ class TinyCStrParser(Parser):
     #   `LPAREN INT RPAREN expr`    -> Cast(DataType.INT, value[3])
     # Both need the `%prec` dummpy-token suffix from the precedence
 
-    @_('LPAREN DOUBLE RPAREN expr %prec UCAST')
-    def expr(self,value):
-        return Cast(DataType.DOUBLE, value[3])
-    @_('LPAREN INT  RPAREN expr %prec UCAST')
-    def expr(self,value):
-       return Cast(DataType.INT, value[3])
+    #@_('LPAREN DOUBLE RPAREN expr')
+    #def expr(self,value):
+        #return Cast(DataType.DOUBLE, value[3])
+    #@_('LPAREN INT  RPAREN expr')
+    #def expr(self,value):
+       # return Cast(DataType.INT, value[3])
 
+
+    @_('LPAREN DOUBLE RPAREN expr %prec UCAST')
+    def expr(self, p):
+        return Cast("double", p.expr)
+
+    @_('LPAREN INT RPAREN expr %prec UCAST')
+    def expr(self, p):
+        return Cast("int", p.expr)
     # TODO(week-5, stage-2c): add ONE `expr` alternative for the ternary
     # operator: `expr QUESTION expr COLON expr` ->
     # Ternary(value[0], value[2], value[4])
-    
     @_('expr QUESTION expr COLON expr')
     def expr(self,value):
         return Ternary(value[0],value[2],value[4])
-
-    
     def error(self, token):
         self.had_error = True
         if token:
