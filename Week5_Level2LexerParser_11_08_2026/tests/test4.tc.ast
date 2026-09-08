@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# parse error -- AST may be incomplete
-=======
 Function main
   Assign
     Var(a)
@@ -12,4 +9,3 @@ Function main
     Var(a)
   Print
     Var(b)
->>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1

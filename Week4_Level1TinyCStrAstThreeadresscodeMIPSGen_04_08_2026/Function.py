@@ -54,10 +54,6 @@ class Function:
         return self.tripleTACstmts.render()
 
     def compile(self):
-        self.localSymbolTable.assignOffsetsToSymbols()
-        mips_gen = MIPSGenerator(self.localSymbolTable)
-        frame_size = self.localSymbolTable.size()
-        self.mipsCode = mips_gen.generate(self.tripleTACstmts.triples, frame_size)
         """
         TODO(week-4): produce this function's complete MIPS assembly and
         store it in self.mipsCode. Steps, in order:

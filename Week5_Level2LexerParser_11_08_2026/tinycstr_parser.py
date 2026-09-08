@@ -225,12 +225,12 @@ class TinyCStrParser(Parser):
 
 
     @_('LPAREN DOUBLE RPAREN expr %prec UCAST')
-    def expr(self, p):
-        return Cast("double", p.expr)
+    def expr(self, value):
+        return Cast(DataType.DOUBLE, value[3])
 
     @_('LPAREN INT RPAREN expr %prec UCAST')
     def expr(self, p):
-        return Cast("int", p.expr)
+        return Cast(DataType.INT, value[3])
     # TODO(week-5, stage-2c): add ONE `expr` alternative for the ternary
     # operator: `expr QUESTION expr COLON expr` ->
     # Ternary(value[0], value[2], value[4])
