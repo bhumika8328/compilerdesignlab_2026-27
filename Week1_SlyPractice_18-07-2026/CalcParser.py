@@ -44,7 +44,6 @@ class CalcParser(Parser):
     def F(self, value):
         return value[0] ** value[2]
 
-    # F-> NUMBER
     @_('NUMBER')
     def F(self, value):
         return value[0]

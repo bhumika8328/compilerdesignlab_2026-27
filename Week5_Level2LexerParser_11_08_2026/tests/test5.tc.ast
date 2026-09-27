@@ -7,10 +7,10 @@ Function main
     Const(10,DataType.INT)
   Assign
     Var(c)
-    Var(x)
+    Const(x,DataType.CHAR)
   Assign
     Var(s)
-    Var(hello)
+    Const(hello,DataType.STRING)
   Print
     RelOp(<)
       Var(a)

@@ -12,11 +12,11 @@ Function main
         Var(a)
         Var(b)
       BinOp(/)
-        Cast(double)
+        Cast(DataType.DOUBLE)
           Var(a)
         Var(b)
       BinOp(/)
-        Cast(double)
+        Cast(DataType.DOUBLE)
           Var(b)
         Var(a)
   Print

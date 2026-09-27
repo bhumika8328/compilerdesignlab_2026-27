@@ -21,7 +21,7 @@ class TinyCStrLexer(Lexer):
         # ---- LEVEL 2 (this week) ----
         DOUBLE, REAL_CONST, CHAR, STRING, CHAR_CONST, STRING_CONST,
         LT, GT, LE, GE, EQ, NE, 
-        QUESTION, COLON,UCAST
+        QUESTION, COLON
         # week-5, stage-2a: add DOUBLE, REAL_CONST to this set.
         # week-5, stage-2b: add CHAR, STRING, CHARLIT, STRINGLIT,
         #   LT, GT, LE, GE, EQ, NE to this set.
@@ -69,25 +69,6 @@ class TinyCStrLexer(Lexer):
     RPAREN = r'\)'
 
 
-    @_(r'\d+\.\d+')
-    def REAL_CONST(self , t):
-        t.value = float(t.value)
-        return t
-
-    """
-    @_(r"([^'\\]|\\.)'")
-    """
-    @_(r"'.'")
-    def CHAR_CONST(self , t):
-        t.value = t.value[1:-1]
-        return t
-
-   
-    @_(r'".*"')  
-    def STRING_CONST(self , t):
-        t.value = t.value[1:-1]
-        return t
-
     # ------------------------------------------------------------------
     # LEVEL 2, Stage 2a -- real constants
     # ------------------------------------------------------------------
@@ -113,7 +94,7 @@ class TinyCStrLexer(Lexer):
     # TODO(week-5, stage-2b): CHAR_CONST -- a single character in single
     # quotes, e.g. 'x'. Function-style rule, strip the surrounding
     # quotes before returning (t.value = t.value[1:-1]).
-    @_(r" '[^']'")
+    @_(r"'[^']'")
     def CHAR_CONST(self,t):
         t.value=t.value[1:-1]
         return t
@@ -121,7 +102,7 @@ class TinyCStrLexer(Lexer):
     # characters in double quotes, e.g. "hello". Function-style rule,
     # strip the surrounding quotes the same way. (No escape-sequence
     # handling needed for Level 2 -- \" inside a string is out of scope.)
-    @_(r' "[^"]*" ')
+    @_(r'"[^"]*"')
     def STRING_CONST(self,t):
         t.value=t.value[1:-1]
         return t
@@ -145,7 +126,7 @@ class TinyCStrLexer(Lexer):
     # LEVEL 2, Stage 2c -- ternary operator tokens
     # ------------------------------------------------------------------
     # TODO(week-5, stage-2c): QUESTION (?) and COLON (:) as plain string
-    # attributes. That's the entire lexer change for Stage 2c 
+    # attribute @_(r" '[^']'") 
     def __init__(self, error_sink=None):
         self.error_sink = error_sink if error_sink is not None else sys.stdout
 
