@@ -29,7 +29,6 @@ class TypeChecker:
                 node.lineno
             )
 
-            # Fallback type so checking can continue
             return node, DataType.INT
 
         return node, entry.getDataType()
@@ -62,7 +61,6 @@ class TypeChecker:
         node.left = left_node
         node.right = right_node
 
-        # Both operands must be numeric
         if not is_numeric(left_type) or not is_numeric(right_type):
             self.error(
                 f"invalid operands to '{node.op}'",
@@ -71,10 +69,8 @@ class TypeChecker:
 
             return node, DataType.INT
 
-        # Find common numeric type
         result_type = promote(left_type, right_type)
 
-        # Insert implicit cast if necessary
         if left_type != result_type:
             node.left = Cast(
                 result_type,
@@ -122,7 +118,6 @@ class TypeChecker:
                 lineno=node.lineno
             )
 
-        # Relational expressions produce an integer result
         return node, DataType.INT
 
     def check_cast(self, node):
@@ -131,7 +126,6 @@ class TypeChecker:
 
         target_type = node.target_type
 
-        # Numeric types can be explicitly converted
         if is_numeric(expr_type) and is_numeric(target_type):
             return node, target_type
 
@@ -151,18 +145,15 @@ class TypeChecker:
         node.then_expr = then_node
         node.else_expr = else_node
 
-        # Condition must be numeric
         if not is_numeric(cond_type):
             self.error(
                 "invalid ternary condition",
                 node.lineno
             )
 
-        # Same type: nothing to convert
         if then_type == else_type:
             return node, then_type
 
-        # Both numeric: promote them
         if is_numeric(then_type) and is_numeric(else_type):
             result_type = promote(then_type, else_type)
 
@@ -182,7 +173,6 @@ class TypeChecker:
 
             return node, result_type
 
-        # Incompatible branches
         self.error(
             "incompatible ternary expressions",
             node.lineno
@@ -191,19 +181,13 @@ class TypeChecker:
         return node, then_type
 
     def check_assign_stmt(self, node):
-        # Check the left-hand variable
         var_node, var_type = self.check_var(node.var)
         node.var = var_node
-
-        # Check right-hand expression
         expr_node, expr_type = self.check_expr(node.expr)
         node.expr = expr_node
-
-        # Same type: valid
         if var_type == expr_type:
             return node
 
-        # Numeric assignment
         if is_numeric(var_type) and is_numeric(expr_type):
             node.expr = Cast(
                 var_type,
@@ -212,7 +196,6 @@ class TypeChecker:
             )
             return node
 
-        # Everything else is invalid
         self.error(
             "invalid assignment",
             node.lineno
@@ -257,4 +240,3 @@ def check_program(program):
         errors.extend(checker.errors)
 
     return errors
-
