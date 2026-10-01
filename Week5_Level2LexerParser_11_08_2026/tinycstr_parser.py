@@ -19,13 +19,12 @@ from Program import Program
 
 class TinyCStrParser(Parser):
     tokens = TinyCStrLexer.tokens
-
     precedence = (
+        ('right','QUESTION','COLON'),
+        ('left','LT','GT','LE','GE','EQ','NE'),
         ('left', 'PLUS', 'MINUS'),
-        ('left', 'TIMES', 'DIVIDE'),
-        ('right', QUESTION, COLON),
-        ('left', LT, GT, LE, GE, EQ, NE),
-        ('right', CAST),
+        ('left', 'TIMES', 'DIVIDE','REMAINDER'),
+        ('right','UCAST')
 
         # TODO(week-5, stage-2b): relational
 
@@ -156,6 +155,11 @@ class TinyCStrParser(Parser):
     @_('expr DIVIDE expr')
     def expr(self, value):
         return BinOp('/', value[0], value[2])
+     @_('expr REMAINDER  expr')
+    def expr(self, value):
+        return BinOp('%', value[0], value[2])
+
+
 
     @_('LPAREN expr RPAREN')
     def expr(self, value):
