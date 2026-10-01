@@ -1,1 +1,15 @@
+<<<<<<< HEAD
 # parse error -- AST may be incomplete
+=======
+Function main
+  Assign
+    Var(a)
+    Const(5,DataType.INT)
+  Assign
+    Var(b)
+    Const(3.14,DataType.DOUBLE)
+  Print
+    Var(a)
+  Print
+    Var(b)
+>>>>>>> usha/main

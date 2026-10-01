@@ -1,0 +1,1717 @@
+Grammar:
+
+Rule 0     S' -> program
+Rule 1     program -> func_def
+Rule 2     func_def -> INT ID LPAREN RPAREN LBRACE decl_stmt_list stmt_list RBRACE
+Rule 3     decl_stmt_list -> empty
+Rule 4     decl_stmt_list -> decl_stmt_list decl
+Rule 5     stmt_list -> empty
+Rule 6     stmt_list -> stmt_list stmt
+Rule 7     empty -> <empty>
+Rule 8     decl -> STRING id_list SEMICOLON
+Rule 9     decl -> CHAR id_list SEMICOLON
+Rule 10    decl -> DOUBLE id_list SEMICOLON
+Rule 11    decl -> INT id_list SEMICOLON
+Rule 12    id_list -> ID
+Rule 13    id_list -> id_list COMMA ID
+Rule 14    stmt -> print_stmt
+Rule 15    stmt -> assign
+Rule 16    assign -> ID ASSIGN expr SEMICOLON
+Rule 17    print_stmt -> PRINT expr SEMICOLON
+Rule 18    expr -> expr QUESTION expr COLON expr  [precedence=right, level=1]
+Rule 19    expr -> LPAREN INT RPAREN expr  [precedence=right, level=5]
+Rule 20    expr -> LPAREN DOUBLE RPAREN expr  [precedence=right, level=5]
+Rule 21    expr -> expr NE expr  [precedence=left, level=2]
+Rule 22    expr -> expr EQ expr  [precedence=left, level=2]
+Rule 23    expr -> expr GE expr  [precedence=left, level=2]
+Rule 24    expr -> expr LE expr  [precedence=left, level=2]
+Rule 25    expr -> expr GT expr  [precedence=left, level=2]
+Rule 26    expr -> expr LT expr  [precedence=left, level=2]
+Rule 27    expr -> STRING_CONST
+Rule 28    expr -> CHAR_CONST
+Rule 29    expr -> REAL_CONST
+Rule 30    expr -> LPAREN expr RPAREN
+Rule 31    expr -> expr REMAINDER expr
+Rule 32    expr -> expr DIVIDE expr  [precedence=left, level=4]
+Rule 33    expr -> expr TIMES expr  [precedence=left, level=4]
+Rule 34    expr -> expr MINUS expr  [precedence=left, level=3]
+Rule 35    expr -> expr PLUS expr  [precedence=left, level=3]
+Rule 36    expr -> ID
+Rule 37    expr -> NUMBER
+
+Terminals, with rules where they appear:
+
+ASSIGN               : 16
+CHAR                 : 9
+CHAR_CONST           : 28
+COLON                : 18
+COMMA                : 13
+DIVIDE               : 32
+DOUBLE               : 10 20
+EQ                   : 22
+GE                   : 23
+GT                   : 25
+ID                   : 2 12 13 16 36
+INT                  : 2 11 19
+LBRACE               : 2
+LE                   : 24
+LPAREN               : 2 19 20 30
+LT                   : 26
+MINUS                : 34
+NE                   : 21
+NUMBER               : 37
+PLUS                 : 35
+PRINT                : 17
+QUESTION             : 18
+RBRACE               : 2
+REAL_CONST           : 29
+REMAINDER            : 31
+RPAREN               : 2 19 20 30
+SEMICOLON            : 8 9 10 11 16 17
+STRING               : 8
+STRING_CONST         : 27
+TIMES                : 33
+error                : 
+
+Nonterminals, with rules where they appear:
+
+assign               : 15
+decl                 : 4
+decl_stmt_list       : 2 4
+empty                : 3 5
+expr                 : 16 17 18 18 18 19 20 21 21 22 22 23 23 24 24 25 25 26 26 30 31 31 32 32 33 33 34 34 35 35
+func_def             : 1
+id_list              : 8 9 10 11 13
+print_stmt           : 14
+program              : 0
+stmt                 : 6
+stmt_list            : 2 6
+
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . func_def
+    (2) func_def -> . INT ID LPAREN RPAREN LBRACE decl_stmt_list stmt_list RBRACE
+    INT             shift and go to state 3
+
+    program                        shift and go to state 1
+    func_def                       shift and go to state 2
+
+state 1
+
+    (0) S' -> program .
+
+
+state 2
+
+    (1) program -> func_def .
+    $end            reduce using rule 1 (program -> func_def .)
+
+
+state 3
+
+    (2) func_def -> INT . ID LPAREN RPAREN LBRACE decl_stmt_list stmt_list RBRACE
+    ID              shift and go to state 4
+
+
+state 4
+
+    (2) func_def -> INT ID . LPAREN RPAREN LBRACE decl_stmt_list stmt_list RBRACE
+    LPAREN          shift and go to state 5
+
+
+state 5
+
+    (2) func_def -> INT ID LPAREN . RPAREN LBRACE decl_stmt_list stmt_list RBRACE
+    RPAREN          shift and go to state 6
+
+
+state 6
+
+    (2) func_def -> INT ID LPAREN RPAREN . LBRACE decl_stmt_list stmt_list RBRACE
+    LBRACE          shift and go to state 7
+
+
+state 7
+
+    (2) func_def -> INT ID LPAREN RPAREN LBRACE . decl_stmt_list stmt_list RBRACE
+    (3) decl_stmt_list -> . empty
+    (4) decl_stmt_list -> . decl_stmt_list decl
+    (7) empty -> .
+    STRING          reduce using rule 7 (empty -> .)
+    CHAR            reduce using rule 7 (empty -> .)
+    DOUBLE          reduce using rule 7 (empty -> .)
+    INT             reduce using rule 7 (empty -> .)
+    RBRACE          reduce using rule 7 (empty -> .)
+    PRINT           reduce using rule 7 (empty -> .)
+    ID              reduce using rule 7 (empty -> .)
+
+    decl_stmt_list                 shift and go to state 8
+    empty                          shift and go to state 9
+
+state 8
+
+    (2) func_def -> INT ID LPAREN RPAREN LBRACE decl_stmt_list . stmt_list RBRACE
+    (4) decl_stmt_list -> decl_stmt_list . decl
+    (5) stmt_list -> . empty
+    (6) stmt_list -> . stmt_list stmt
+    (8) decl -> . STRING id_list SEMICOLON
+    (9) decl -> . CHAR id_list SEMICOLON
+    (10) decl -> . DOUBLE id_list SEMICOLON
+    (11) decl -> . INT id_list SEMICOLON
+    (7) empty -> .
+    STRING          shift and go to state 14
+    CHAR            shift and go to state 15
+    DOUBLE          shift and go to state 16
+    INT             shift and go to state 10
+    RBRACE          reduce using rule 7 (empty -> .)
+    PRINT           reduce using rule 7 (empty -> .)
+    ID              reduce using rule 7 (empty -> .)
+
+    stmt_list                      shift and go to state 11
+    decl                           shift and go to state 12
+    empty                          shift and go to state 13
+
+state 9
+
+    (3) decl_stmt_list -> empty .
+    STRING          reduce using rule 3 (decl_stmt_list -> empty .)
+    CHAR            reduce using rule 3 (decl_stmt_list -> empty .)
+    DOUBLE          reduce using rule 3 (decl_stmt_list -> empty .)
+    INT             reduce using rule 3 (decl_stmt_list -> empty .)
+    RBRACE          reduce using rule 3 (decl_stmt_list -> empty .)
+    PRINT           reduce using rule 3 (decl_stmt_list -> empty .)
+    ID              reduce using rule 3 (decl_stmt_list -> empty .)
+
+
+state 10
+
+    (11) decl -> INT . id_list SEMICOLON
+    (12) id_list -> . ID
+    (13) id_list -> . id_list COMMA ID
+    ID              shift and go to state 18
+
+    id_list                        shift and go to state 17
+
+state 11
+
+    (2) func_def -> INT ID LPAREN RPAREN LBRACE decl_stmt_list stmt_list . RBRACE
+    (6) stmt_list -> stmt_list . stmt
+    (14) stmt -> . print_stmt
+    (15) stmt -> . assign
+    (17) print_stmt -> . PRINT expr SEMICOLON
+    (16) assign -> . ID ASSIGN expr SEMICOLON
+    RBRACE          shift and go to state 20
+    PRINT           shift and go to state 24
+    ID              shift and go to state 19
+
+    stmt                           shift and go to state 21
+    print_stmt                     shift and go to state 22
+    assign                         shift and go to state 23
+
+state 12
+
+    (4) decl_stmt_list -> decl_stmt_list decl .
+    STRING          reduce using rule 4 (decl_stmt_list -> decl_stmt_list decl .)
+    CHAR            reduce using rule 4 (decl_stmt_list -> decl_stmt_list decl .)
+    DOUBLE          reduce using rule 4 (decl_stmt_list -> decl_stmt_list decl .)
+    INT             reduce using rule 4 (decl_stmt_list -> decl_stmt_list decl .)
+    RBRACE          reduce using rule 4 (decl_stmt_list -> decl_stmt_list decl .)
+    PRINT           reduce using rule 4 (decl_stmt_list -> decl_stmt_list decl .)
+    ID              reduce using rule 4 (decl_stmt_list -> decl_stmt_list decl .)
+
+
+state 13
+
+    (5) stmt_list -> empty .
+    RBRACE          reduce using rule 5 (stmt_list -> empty .)
+    PRINT           reduce using rule 5 (stmt_list -> empty .)
+    ID              reduce using rule 5 (stmt_list -> empty .)
+
+
+state 14
+
+    (8) decl -> STRING . id_list SEMICOLON
+    (12) id_list -> . ID
+    (13) id_list -> . id_list COMMA ID
+    ID              shift and go to state 18
+
+    id_list                        shift and go to state 25
+
+state 15
+
+    (9) decl -> CHAR . id_list SEMICOLON
+    (12) id_list -> . ID
+    (13) id_list -> . id_list COMMA ID
+    ID              shift and go to state 18
+
+    id_list                        shift and go to state 26
+
+state 16
+
+    (10) decl -> DOUBLE . id_list SEMICOLON
+    (12) id_list -> . ID
+    (13) id_list -> . id_list COMMA ID
+    ID              shift and go to state 18
+
+    id_list                        shift and go to state 27
+
+state 17
+
+    (11) decl -> INT id_list . SEMICOLON
+    (13) id_list -> id_list . COMMA ID
+    SEMICOLON       shift and go to state 28
+    COMMA           shift and go to state 29
+
+
+state 18
+
+    (12) id_list -> ID .
+    SEMICOLON       reduce using rule 12 (id_list -> ID .)
+    COMMA           reduce using rule 12 (id_list -> ID .)
+
+
+state 19
+
+    (16) assign -> ID . ASSIGN expr SEMICOLON
+    ASSIGN          shift and go to state 30
+
+
+state 20
+
+    (2) func_def -> INT ID LPAREN RPAREN LBRACE decl_stmt_list stmt_list RBRACE .
+    $end            reduce using rule 2 (func_def -> INT ID LPAREN RPAREN LBRACE decl_stmt_list stmt_list RBRACE .)
+
+
+state 21
+
+    (6) stmt_list -> stmt_list stmt .
+    RBRACE          reduce using rule 6 (stmt_list -> stmt_list stmt .)
+    PRINT           reduce using rule 6 (stmt_list -> stmt_list stmt .)
+    ID              reduce using rule 6 (stmt_list -> stmt_list stmt .)
+
+
+state 22
+
+    (14) stmt -> print_stmt .
+    RBRACE          reduce using rule 14 (stmt -> print_stmt .)
+    PRINT           reduce using rule 14 (stmt -> print_stmt .)
+    ID              reduce using rule 14 (stmt -> print_stmt .)
+
+
+state 23
+
+    (15) stmt -> assign .
+    RBRACE          reduce using rule 15 (stmt -> assign .)
+    PRINT           reduce using rule 15 (stmt -> assign .)
+    ID              reduce using rule 15 (stmt -> assign .)
+
+
+state 24
+
+    (17) print_stmt -> PRINT . expr SEMICOLON
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 31
+
+state 25
+
+    (8) decl -> STRING id_list . SEMICOLON
+    (13) id_list -> id_list . COMMA ID
+    SEMICOLON       shift and go to state 38
+    COMMA           shift and go to state 29
+
+
+state 26
+
+    (9) decl -> CHAR id_list . SEMICOLON
+    (13) id_list -> id_list . COMMA ID
+    SEMICOLON       shift and go to state 39
+    COMMA           shift and go to state 29
+
+
+state 27
+
+    (10) decl -> DOUBLE id_list . SEMICOLON
+    (13) id_list -> id_list . COMMA ID
+    SEMICOLON       shift and go to state 40
+    COMMA           shift and go to state 29
+
+
+state 28
+
+    (11) decl -> INT id_list SEMICOLON .
+    STRING          reduce using rule 11 (decl -> INT id_list SEMICOLON .)
+    CHAR            reduce using rule 11 (decl -> INT id_list SEMICOLON .)
+    DOUBLE          reduce using rule 11 (decl -> INT id_list SEMICOLON .)
+    INT             reduce using rule 11 (decl -> INT id_list SEMICOLON .)
+    RBRACE          reduce using rule 11 (decl -> INT id_list SEMICOLON .)
+    PRINT           reduce using rule 11 (decl -> INT id_list SEMICOLON .)
+    ID              reduce using rule 11 (decl -> INT id_list SEMICOLON .)
+
+
+state 29
+
+    (13) id_list -> id_list COMMA . ID
+    ID              shift and go to state 41
+
+
+state 30
+
+    (16) assign -> ID ASSIGN . expr SEMICOLON
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 42
+
+state 31
+
+    (17) print_stmt -> PRINT expr . SEMICOLON
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       shift and go to state 43
+    QUESTION        shift and go to state 44
+    NE              shift and go to state 45
+    EQ              shift and go to state 46
+    GE              shift and go to state 47
+    LE              shift and go to state 48
+    GT              shift and go to state 49
+    LT              shift and go to state 50
+    REMAINDER       shift and go to state 51
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 32
+
+    (19) expr -> LPAREN . INT RPAREN expr
+    (20) expr -> LPAREN . DOUBLE RPAREN expr
+    (30) expr -> LPAREN . expr RPAREN
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    INT             shift and go to state 56
+    DOUBLE          shift and go to state 58
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 57
+
+state 33
+
+    (27) expr -> STRING_CONST .
+    SEMICOLON       reduce using rule 27 (expr -> STRING_CONST .)
+    QUESTION        reduce using rule 27 (expr -> STRING_CONST .)
+    NE              reduce using rule 27 (expr -> STRING_CONST .)
+    EQ              reduce using rule 27 (expr -> STRING_CONST .)
+    GE              reduce using rule 27 (expr -> STRING_CONST .)
+    LE              reduce using rule 27 (expr -> STRING_CONST .)
+    GT              reduce using rule 27 (expr -> STRING_CONST .)
+    LT              reduce using rule 27 (expr -> STRING_CONST .)
+    REMAINDER       reduce using rule 27 (expr -> STRING_CONST .)
+    DIVIDE          reduce using rule 27 (expr -> STRING_CONST .)
+    TIMES           reduce using rule 27 (expr -> STRING_CONST .)
+    MINUS           reduce using rule 27 (expr -> STRING_CONST .)
+    PLUS            reduce using rule 27 (expr -> STRING_CONST .)
+    RPAREN          reduce using rule 27 (expr -> STRING_CONST .)
+    COLON           reduce using rule 27 (expr -> STRING_CONST .)
+
+
+state 34
+
+    (28) expr -> CHAR_CONST .
+    SEMICOLON       reduce using rule 28 (expr -> CHAR_CONST .)
+    QUESTION        reduce using rule 28 (expr -> CHAR_CONST .)
+    NE              reduce using rule 28 (expr -> CHAR_CONST .)
+    EQ              reduce using rule 28 (expr -> CHAR_CONST .)
+    GE              reduce using rule 28 (expr -> CHAR_CONST .)
+    LE              reduce using rule 28 (expr -> CHAR_CONST .)
+    GT              reduce using rule 28 (expr -> CHAR_CONST .)
+    LT              reduce using rule 28 (expr -> CHAR_CONST .)
+    REMAINDER       reduce using rule 28 (expr -> CHAR_CONST .)
+    DIVIDE          reduce using rule 28 (expr -> CHAR_CONST .)
+    TIMES           reduce using rule 28 (expr -> CHAR_CONST .)
+    MINUS           reduce using rule 28 (expr -> CHAR_CONST .)
+    PLUS            reduce using rule 28 (expr -> CHAR_CONST .)
+    RPAREN          reduce using rule 28 (expr -> CHAR_CONST .)
+    COLON           reduce using rule 28 (expr -> CHAR_CONST .)
+
+
+state 35
+
+    (29) expr -> REAL_CONST .
+    SEMICOLON       reduce using rule 29 (expr -> REAL_CONST .)
+    QUESTION        reduce using rule 29 (expr -> REAL_CONST .)
+    NE              reduce using rule 29 (expr -> REAL_CONST .)
+    EQ              reduce using rule 29 (expr -> REAL_CONST .)
+    GE              reduce using rule 29 (expr -> REAL_CONST .)
+    LE              reduce using rule 29 (expr -> REAL_CONST .)
+    GT              reduce using rule 29 (expr -> REAL_CONST .)
+    LT              reduce using rule 29 (expr -> REAL_CONST .)
+    REMAINDER       reduce using rule 29 (expr -> REAL_CONST .)
+    DIVIDE          reduce using rule 29 (expr -> REAL_CONST .)
+    TIMES           reduce using rule 29 (expr -> REAL_CONST .)
+    MINUS           reduce using rule 29 (expr -> REAL_CONST .)
+    PLUS            reduce using rule 29 (expr -> REAL_CONST .)
+    RPAREN          reduce using rule 29 (expr -> REAL_CONST .)
+    COLON           reduce using rule 29 (expr -> REAL_CONST .)
+
+
+state 36
+
+    (36) expr -> ID .
+    SEMICOLON       reduce using rule 36 (expr -> ID .)
+    QUESTION        reduce using rule 36 (expr -> ID .)
+    NE              reduce using rule 36 (expr -> ID .)
+    EQ              reduce using rule 36 (expr -> ID .)
+    GE              reduce using rule 36 (expr -> ID .)
+    LE              reduce using rule 36 (expr -> ID .)
+    GT              reduce using rule 36 (expr -> ID .)
+    LT              reduce using rule 36 (expr -> ID .)
+    REMAINDER       reduce using rule 36 (expr -> ID .)
+    DIVIDE          reduce using rule 36 (expr -> ID .)
+    TIMES           reduce using rule 36 (expr -> ID .)
+    MINUS           reduce using rule 36 (expr -> ID .)
+    PLUS            reduce using rule 36 (expr -> ID .)
+    RPAREN          reduce using rule 36 (expr -> ID .)
+    COLON           reduce using rule 36 (expr -> ID .)
+
+
+state 37
+
+    (37) expr -> NUMBER .
+    SEMICOLON       reduce using rule 37 (expr -> NUMBER .)
+    QUESTION        reduce using rule 37 (expr -> NUMBER .)
+    NE              reduce using rule 37 (expr -> NUMBER .)
+    EQ              reduce using rule 37 (expr -> NUMBER .)
+    GE              reduce using rule 37 (expr -> NUMBER .)
+    LE              reduce using rule 37 (expr -> NUMBER .)
+    GT              reduce using rule 37 (expr -> NUMBER .)
+    LT              reduce using rule 37 (expr -> NUMBER .)
+    REMAINDER       reduce using rule 37 (expr -> NUMBER .)
+    DIVIDE          reduce using rule 37 (expr -> NUMBER .)
+    TIMES           reduce using rule 37 (expr -> NUMBER .)
+    MINUS           reduce using rule 37 (expr -> NUMBER .)
+    PLUS            reduce using rule 37 (expr -> NUMBER .)
+    RPAREN          reduce using rule 37 (expr -> NUMBER .)
+    COLON           reduce using rule 37 (expr -> NUMBER .)
+
+
+state 38
+
+    (8) decl -> STRING id_list SEMICOLON .
+    STRING          reduce using rule 8 (decl -> STRING id_list SEMICOLON .)
+    CHAR            reduce using rule 8 (decl -> STRING id_list SEMICOLON .)
+    DOUBLE          reduce using rule 8 (decl -> STRING id_list SEMICOLON .)
+    INT             reduce using rule 8 (decl -> STRING id_list SEMICOLON .)
+    RBRACE          reduce using rule 8 (decl -> STRING id_list SEMICOLON .)
+    PRINT           reduce using rule 8 (decl -> STRING id_list SEMICOLON .)
+    ID              reduce using rule 8 (decl -> STRING id_list SEMICOLON .)
+
+
+state 39
+
+    (9) decl -> CHAR id_list SEMICOLON .
+    STRING          reduce using rule 9 (decl -> CHAR id_list SEMICOLON .)
+    CHAR            reduce using rule 9 (decl -> CHAR id_list SEMICOLON .)
+    DOUBLE          reduce using rule 9 (decl -> CHAR id_list SEMICOLON .)
+    INT             reduce using rule 9 (decl -> CHAR id_list SEMICOLON .)
+    RBRACE          reduce using rule 9 (decl -> CHAR id_list SEMICOLON .)
+    PRINT           reduce using rule 9 (decl -> CHAR id_list SEMICOLON .)
+    ID              reduce using rule 9 (decl -> CHAR id_list SEMICOLON .)
+
+
+state 40
+
+    (10) decl -> DOUBLE id_list SEMICOLON .
+    STRING          reduce using rule 10 (decl -> DOUBLE id_list SEMICOLON .)
+    CHAR            reduce using rule 10 (decl -> DOUBLE id_list SEMICOLON .)
+    DOUBLE          reduce using rule 10 (decl -> DOUBLE id_list SEMICOLON .)
+    INT             reduce using rule 10 (decl -> DOUBLE id_list SEMICOLON .)
+    RBRACE          reduce using rule 10 (decl -> DOUBLE id_list SEMICOLON .)
+    PRINT           reduce using rule 10 (decl -> DOUBLE id_list SEMICOLON .)
+    ID              reduce using rule 10 (decl -> DOUBLE id_list SEMICOLON .)
+
+
+state 41
+
+    (13) id_list -> id_list COMMA ID .
+    SEMICOLON       reduce using rule 13 (id_list -> id_list COMMA ID .)
+    COMMA           reduce using rule 13 (id_list -> id_list COMMA ID .)
+
+
+state 42
+
+    (16) assign -> ID ASSIGN expr . SEMICOLON
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       shift and go to state 59
+    QUESTION        shift and go to state 44
+    NE              shift and go to state 45
+    EQ              shift and go to state 46
+    GE              shift and go to state 47
+    LE              shift and go to state 48
+    GT              shift and go to state 49
+    LT              shift and go to state 50
+    REMAINDER       shift and go to state 51
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 43
+
+    (17) print_stmt -> PRINT expr SEMICOLON .
+    RBRACE          reduce using rule 17 (print_stmt -> PRINT expr SEMICOLON .)
+    PRINT           reduce using rule 17 (print_stmt -> PRINT expr SEMICOLON .)
+    ID              reduce using rule 17 (print_stmt -> PRINT expr SEMICOLON .)
+
+
+state 44
+
+    (18) expr -> expr QUESTION . expr COLON expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 60
+
+state 45
+
+    (21) expr -> expr NE . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 61
+
+state 46
+
+    (22) expr -> expr EQ . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 62
+
+state 47
+
+    (23) expr -> expr GE . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 63
+
+state 48
+
+    (24) expr -> expr LE . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 64
+
+state 49
+
+    (25) expr -> expr GT . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 65
+
+state 50
+
+    (26) expr -> expr LT . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 66
+
+state 51
+
+    (31) expr -> expr REMAINDER . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 67
+
+state 52
+
+    (32) expr -> expr DIVIDE . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 68
+
+state 53
+
+    (33) expr -> expr TIMES . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 69
+
+state 54
+
+    (34) expr -> expr MINUS . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 70
+
+state 55
+
+    (35) expr -> expr PLUS . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 71
+
+state 56
+
+    (19) expr -> LPAREN INT . RPAREN expr
+    RPAREN          shift and go to state 72
+
+
+state 57
+
+    (30) expr -> LPAREN expr . RPAREN
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    RPAREN          shift and go to state 73
+    QUESTION        shift and go to state 44
+    NE              shift and go to state 45
+    EQ              shift and go to state 46
+    GE              shift and go to state 47
+    LE              shift and go to state 48
+    GT              shift and go to state 49
+    LT              shift and go to state 50
+    REMAINDER       shift and go to state 51
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 58
+
+    (20) expr -> LPAREN DOUBLE . RPAREN expr
+    RPAREN          shift and go to state 74
+
+
+state 59
+
+    (16) assign -> ID ASSIGN expr SEMICOLON .
+    RBRACE          reduce using rule 16 (assign -> ID ASSIGN expr SEMICOLON .)
+    PRINT           reduce using rule 16 (assign -> ID ASSIGN expr SEMICOLON .)
+    ID              reduce using rule 16 (assign -> ID ASSIGN expr SEMICOLON .)
+
+
+state 60
+
+    (18) expr -> expr QUESTION expr . COLON expr
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    COLON           shift and go to state 75
+    QUESTION        shift and go to state 44
+    NE              shift and go to state 45
+    EQ              shift and go to state 46
+    GE              shift and go to state 47
+    LE              shift and go to state 48
+    GT              shift and go to state 49
+    LT              shift and go to state 50
+    REMAINDER       shift and go to state 51
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 61
+
+    (21) expr -> expr NE expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 21 (expr -> expr NE expr .)
+    QUESTION        reduce using rule 21 (expr -> expr NE expr .)
+    NE              reduce using rule 21 (expr -> expr NE expr .)
+    EQ              reduce using rule 21 (expr -> expr NE expr .)
+    GE              reduce using rule 21 (expr -> expr NE expr .)
+    LE              reduce using rule 21 (expr -> expr NE expr .)
+    GT              reduce using rule 21 (expr -> expr NE expr .)
+    LT              reduce using rule 21 (expr -> expr NE expr .)
+    REMAINDER       reduce using rule 21 (expr -> expr NE expr .)
+    RPAREN          reduce using rule 21 (expr -> expr NE expr .)
+    COLON           reduce using rule 21 (expr -> expr NE expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 62
+
+    (22) expr -> expr EQ expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 22 (expr -> expr EQ expr .)
+    QUESTION        reduce using rule 22 (expr -> expr EQ expr .)
+    NE              reduce using rule 22 (expr -> expr EQ expr .)
+    EQ              reduce using rule 22 (expr -> expr EQ expr .)
+    GE              reduce using rule 22 (expr -> expr EQ expr .)
+    LE              reduce using rule 22 (expr -> expr EQ expr .)
+    GT              reduce using rule 22 (expr -> expr EQ expr .)
+    LT              reduce using rule 22 (expr -> expr EQ expr .)
+    REMAINDER       reduce using rule 22 (expr -> expr EQ expr .)
+    RPAREN          reduce using rule 22 (expr -> expr EQ expr .)
+    COLON           reduce using rule 22 (expr -> expr EQ expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 63
+
+    (23) expr -> expr GE expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 23 (expr -> expr GE expr .)
+    QUESTION        reduce using rule 23 (expr -> expr GE expr .)
+    NE              reduce using rule 23 (expr -> expr GE expr .)
+    EQ              reduce using rule 23 (expr -> expr GE expr .)
+    GE              reduce using rule 23 (expr -> expr GE expr .)
+    LE              reduce using rule 23 (expr -> expr GE expr .)
+    GT              reduce using rule 23 (expr -> expr GE expr .)
+    LT              reduce using rule 23 (expr -> expr GE expr .)
+    REMAINDER       reduce using rule 23 (expr -> expr GE expr .)
+    RPAREN          reduce using rule 23 (expr -> expr GE expr .)
+    COLON           reduce using rule 23 (expr -> expr GE expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 64
+
+    (24) expr -> expr LE expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 24 (expr -> expr LE expr .)
+    QUESTION        reduce using rule 24 (expr -> expr LE expr .)
+    NE              reduce using rule 24 (expr -> expr LE expr .)
+    EQ              reduce using rule 24 (expr -> expr LE expr .)
+    GE              reduce using rule 24 (expr -> expr LE expr .)
+    LE              reduce using rule 24 (expr -> expr LE expr .)
+    GT              reduce using rule 24 (expr -> expr LE expr .)
+    LT              reduce using rule 24 (expr -> expr LE expr .)
+    REMAINDER       reduce using rule 24 (expr -> expr LE expr .)
+    RPAREN          reduce using rule 24 (expr -> expr LE expr .)
+    COLON           reduce using rule 24 (expr -> expr LE expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 65
+
+    (25) expr -> expr GT expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 25 (expr -> expr GT expr .)
+    QUESTION        reduce using rule 25 (expr -> expr GT expr .)
+    NE              reduce using rule 25 (expr -> expr GT expr .)
+    EQ              reduce using rule 25 (expr -> expr GT expr .)
+    GE              reduce using rule 25 (expr -> expr GT expr .)
+    LE              reduce using rule 25 (expr -> expr GT expr .)
+    GT              reduce using rule 25 (expr -> expr GT expr .)
+    LT              reduce using rule 25 (expr -> expr GT expr .)
+    REMAINDER       reduce using rule 25 (expr -> expr GT expr .)
+    RPAREN          reduce using rule 25 (expr -> expr GT expr .)
+    COLON           reduce using rule 25 (expr -> expr GT expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 66
+
+    (26) expr -> expr LT expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 26 (expr -> expr LT expr .)
+    QUESTION        reduce using rule 26 (expr -> expr LT expr .)
+    NE              reduce using rule 26 (expr -> expr LT expr .)
+    EQ              reduce using rule 26 (expr -> expr LT expr .)
+    GE              reduce using rule 26 (expr -> expr LT expr .)
+    LE              reduce using rule 26 (expr -> expr LT expr .)
+    GT              reduce using rule 26 (expr -> expr LT expr .)
+    LT              reduce using rule 26 (expr -> expr LT expr .)
+    REMAINDER       reduce using rule 26 (expr -> expr LT expr .)
+    RPAREN          reduce using rule 26 (expr -> expr LT expr .)
+    COLON           reduce using rule 26 (expr -> expr LT expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 67
+
+    (31) expr -> expr REMAINDER expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+  ! shift/reduce conflict for QUESTION resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for REMAINDER resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+    SEMICOLON       reduce using rule 31 (expr -> expr REMAINDER expr .)
+    RPAREN          reduce using rule 31 (expr -> expr REMAINDER expr .)
+    COLON           reduce using rule 31 (expr -> expr REMAINDER expr .)
+    QUESTION        shift and go to state 44
+    NE              shift and go to state 45
+    EQ              shift and go to state 46
+    GE              shift and go to state 47
+    LE              shift and go to state 48
+    GT              shift and go to state 49
+    LT              shift and go to state 50
+    REMAINDER       shift and go to state 51
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+state 68
+
+    (32) expr -> expr DIVIDE expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 32 (expr -> expr DIVIDE expr .)
+    QUESTION        reduce using rule 32 (expr -> expr DIVIDE expr .)
+    NE              reduce using rule 32 (expr -> expr DIVIDE expr .)
+    EQ              reduce using rule 32 (expr -> expr DIVIDE expr .)
+    GE              reduce using rule 32 (expr -> expr DIVIDE expr .)
+    LE              reduce using rule 32 (expr -> expr DIVIDE expr .)
+    GT              reduce using rule 32 (expr -> expr DIVIDE expr .)
+    LT              reduce using rule 32 (expr -> expr DIVIDE expr .)
+    REMAINDER       reduce using rule 32 (expr -> expr DIVIDE expr .)
+    DIVIDE          reduce using rule 32 (expr -> expr DIVIDE expr .)
+    TIMES           reduce using rule 32 (expr -> expr DIVIDE expr .)
+    MINUS           reduce using rule 32 (expr -> expr DIVIDE expr .)
+    PLUS            reduce using rule 32 (expr -> expr DIVIDE expr .)
+    RPAREN          reduce using rule 32 (expr -> expr DIVIDE expr .)
+    COLON           reduce using rule 32 (expr -> expr DIVIDE expr .)
+
+
+state 69
+
+    (33) expr -> expr TIMES expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 33 (expr -> expr TIMES expr .)
+    QUESTION        reduce using rule 33 (expr -> expr TIMES expr .)
+    NE              reduce using rule 33 (expr -> expr TIMES expr .)
+    EQ              reduce using rule 33 (expr -> expr TIMES expr .)
+    GE              reduce using rule 33 (expr -> expr TIMES expr .)
+    LE              reduce using rule 33 (expr -> expr TIMES expr .)
+    GT              reduce using rule 33 (expr -> expr TIMES expr .)
+    LT              reduce using rule 33 (expr -> expr TIMES expr .)
+    REMAINDER       reduce using rule 33 (expr -> expr TIMES expr .)
+    DIVIDE          reduce using rule 33 (expr -> expr TIMES expr .)
+    TIMES           reduce using rule 33 (expr -> expr TIMES expr .)
+    MINUS           reduce using rule 33 (expr -> expr TIMES expr .)
+    PLUS            reduce using rule 33 (expr -> expr TIMES expr .)
+    RPAREN          reduce using rule 33 (expr -> expr TIMES expr .)
+    COLON           reduce using rule 33 (expr -> expr TIMES expr .)
+
+
+state 70
+
+    (34) expr -> expr MINUS expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 34 (expr -> expr MINUS expr .)
+    QUESTION        reduce using rule 34 (expr -> expr MINUS expr .)
+    NE              reduce using rule 34 (expr -> expr MINUS expr .)
+    EQ              reduce using rule 34 (expr -> expr MINUS expr .)
+    GE              reduce using rule 34 (expr -> expr MINUS expr .)
+    LE              reduce using rule 34 (expr -> expr MINUS expr .)
+    GT              reduce using rule 34 (expr -> expr MINUS expr .)
+    LT              reduce using rule 34 (expr -> expr MINUS expr .)
+    REMAINDER       reduce using rule 34 (expr -> expr MINUS expr .)
+    MINUS           reduce using rule 34 (expr -> expr MINUS expr .)
+    PLUS            reduce using rule 34 (expr -> expr MINUS expr .)
+    RPAREN          reduce using rule 34 (expr -> expr MINUS expr .)
+    COLON           reduce using rule 34 (expr -> expr MINUS expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+
+
+state 71
+
+    (35) expr -> expr PLUS expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 35 (expr -> expr PLUS expr .)
+    QUESTION        reduce using rule 35 (expr -> expr PLUS expr .)
+    NE              reduce using rule 35 (expr -> expr PLUS expr .)
+    EQ              reduce using rule 35 (expr -> expr PLUS expr .)
+    GE              reduce using rule 35 (expr -> expr PLUS expr .)
+    LE              reduce using rule 35 (expr -> expr PLUS expr .)
+    GT              reduce using rule 35 (expr -> expr PLUS expr .)
+    LT              reduce using rule 35 (expr -> expr PLUS expr .)
+    REMAINDER       reduce using rule 35 (expr -> expr PLUS expr .)
+    MINUS           reduce using rule 35 (expr -> expr PLUS expr .)
+    PLUS            reduce using rule 35 (expr -> expr PLUS expr .)
+    RPAREN          reduce using rule 35 (expr -> expr PLUS expr .)
+    COLON           reduce using rule 35 (expr -> expr PLUS expr .)
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+
+
+state 72
+
+    (19) expr -> LPAREN INT RPAREN . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 76
+
+state 73
+
+    (30) expr -> LPAREN expr RPAREN .
+    SEMICOLON       reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    QUESTION        reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    NE              reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    EQ              reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    GE              reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    LE              reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    GT              reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    LT              reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    REMAINDER       reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    TIMES           reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+    COLON           reduce using rule 30 (expr -> LPAREN expr RPAREN .)
+
+
+state 74
+
+    (20) expr -> LPAREN DOUBLE RPAREN . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 77
+
+state 75
+
+    (18) expr -> expr QUESTION expr COLON . expr
+    (18) expr -> . expr QUESTION expr COLON expr
+    (19) expr -> . LPAREN INT RPAREN expr
+    (20) expr -> . LPAREN DOUBLE RPAREN expr
+    (21) expr -> . expr NE expr
+    (22) expr -> . expr EQ expr
+    (23) expr -> . expr GE expr
+    (24) expr -> . expr LE expr
+    (25) expr -> . expr GT expr
+    (26) expr -> . expr LT expr
+    (27) expr -> . STRING_CONST
+    (28) expr -> . CHAR_CONST
+    (29) expr -> . REAL_CONST
+    (30) expr -> . LPAREN expr RPAREN
+    (31) expr -> . expr REMAINDER expr
+    (32) expr -> . expr DIVIDE expr
+    (33) expr -> . expr TIMES expr
+    (34) expr -> . expr MINUS expr
+    (35) expr -> . expr PLUS expr
+    (36) expr -> . ID
+    (37) expr -> . NUMBER
+    LPAREN          shift and go to state 32
+    STRING_CONST    shift and go to state 33
+    CHAR_CONST      shift and go to state 34
+    REAL_CONST      shift and go to state 35
+    ID              shift and go to state 36
+    NUMBER          shift and go to state 37
+
+    expr                           shift and go to state 78
+
+state 76
+
+    (19) expr -> LPAREN INT RPAREN expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    QUESTION        reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    NE              reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    EQ              reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    GE              reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    LE              reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    GT              reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    LT              reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    REMAINDER       reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    DIVIDE          reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    TIMES           reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    MINUS           reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    PLUS            reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    RPAREN          reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+    COLON           reduce using rule 19 (expr -> LPAREN INT RPAREN expr .)
+
+
+state 77
+
+    (20) expr -> LPAREN DOUBLE RPAREN expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    QUESTION        reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    NE              reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    EQ              reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    GE              reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    LE              reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    GT              reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    LT              reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    REMAINDER       reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    DIVIDE          reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    TIMES           reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    MINUS           reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    PLUS            reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    RPAREN          reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+    COLON           reduce using rule 20 (expr -> LPAREN DOUBLE RPAREN expr .)
+
+
+state 78
+
+    (18) expr -> expr QUESTION expr COLON expr .
+    (18) expr -> expr . QUESTION expr COLON expr
+    (21) expr -> expr . NE expr
+    (22) expr -> expr . EQ expr
+    (23) expr -> expr . GE expr
+    (24) expr -> expr . LE expr
+    (25) expr -> expr . GT expr
+    (26) expr -> expr . LT expr
+    (31) expr -> expr . REMAINDER expr
+    (32) expr -> expr . DIVIDE expr
+    (33) expr -> expr . TIMES expr
+    (34) expr -> expr . MINUS expr
+    (35) expr -> expr . PLUS expr
+    SEMICOLON       reduce using rule 18 (expr -> expr QUESTION expr COLON expr .)
+    REMAINDER       reduce using rule 18 (expr -> expr QUESTION expr COLON expr .)
+    RPAREN          reduce using rule 18 (expr -> expr QUESTION expr COLON expr .)
+    COLON           reduce using rule 18 (expr -> expr QUESTION expr COLON expr .)
+    QUESTION        shift and go to state 44
+    NE              shift and go to state 45
+    EQ              shift and go to state 46
+    GE              shift and go to state 47
+    LE              shift and go to state 48
+    GT              shift and go to state 49
+    LT              shift and go to state 50
+    DIVIDE          shift and go to state 52
+    TIMES           shift and go to state 53
+    MINUS           shift and go to state 54
+    PLUS            shift and go to state 55
+
+
+Conflicts:
+
+shift/reduce conflict for QUESTION in state 67 resolved as shift
+shift/reduce conflict for NE in state 67 resolved as shift
+shift/reduce conflict for EQ in state 67 resolved as shift
+shift/reduce conflict for GE in state 67 resolved as shift
+shift/reduce conflict for LE in state 67 resolved as shift
+shift/reduce conflict for GT in state 67 resolved as shift
+shift/reduce conflict for LT in state 67 resolved as shift
+shift/reduce conflict for REMAINDER in state 67 resolved as shift
+shift/reduce conflict for DIVIDE in state 67 resolved as shift
+shift/reduce conflict for TIMES in state 67 resolved as shift
+shift/reduce conflict for MINUS in state 67 resolved as shift
+shift/reduce conflict for PLUS in state 67 resolved as shift

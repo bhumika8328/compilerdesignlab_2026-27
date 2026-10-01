@@ -1,0 +1,19 @@
+int main(){
+<<<<<<< HEAD
+<<<<<<< HEAD
+    int a;
+    a = 1+2-3*4%5/6;
+    print a;
+}
+=======
+	int a;
+a = 1+2-3*4%5/6;
+print a;
+}
+>>>>>>> tac generator modified
+=======
+    int a ;
+    a = 1+2-3*4%5/6;
+    print a ;
+}
+>>>>>>> 6eded1e3ff9669780beba154cac6c81b9bebc9c1

@@ -24,7 +24,7 @@ class TinyCStrParser(Parser):
         ('right', 'QUESTION', 'COLON'),
         ('left', 'LT', 'GT', 'LE', 'GE', 'EQ', 'NE'),
         ('left', 'PLUS', 'MINUS'),
-        ('left', 'TIMES', 'DIVIDE'),
+        ('left', 'TIMES', 'DIVIDE','REMAINDER'),
         ('right', 'UCAST'),
     )
 
@@ -129,6 +129,10 @@ class TinyCStrParser(Parser):
     @_('expr DIVIDE expr')
     def expr(self, value):
         return BinOp('/', value[0], value[2], lineno=value.lineno)
+
+    @_('expr REMAINDER expr')
+    def expr(self, value):
+        return BinOp('%', value[0], value[2], lineno=value.lineno)
 
     @_('LPAREN expr RPAREN')
     def expr(self, value):

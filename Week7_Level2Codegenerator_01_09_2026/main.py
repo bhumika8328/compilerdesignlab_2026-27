@@ -105,8 +105,26 @@ def write_3ac_debug(source_path, out_file):
         return
     func = program.getFunctions()[0]
     out_file.write(func.renderTripleTAC() + "\n")
+def write_compile(source_path, out_file):
+    program, had_error = _parse_source(source_path)
+    if had_error:
+        print("# parse error -- cannot compile", file=out_file)
+        return
 
+    if not _type_check_gate(program, out_file):
+        return
 
+    try:
+        program.generateTripleTAC()
+        program.compile()
+    except Exception as e:
+        print(f"COMPILE ERROR: {e}", file=sys.stderr)
+        raise
+
+    func = program.getFunctions()[0]
+    out_file.write(func.getMipsCode())
+
+"""
 def write_compile(source_path, out_file):
     program, had_error = _parse_source(source_path)
     if had_error:
@@ -117,12 +135,15 @@ def write_compile(source_path, out_file):
     try:
         program.generateTripleTAC()
         program.compile()
+   # except Exception as e:
+       # print(f"COMPILE ERROR: {e}", file=sys.stderr)
+        #raise
     except Exception:
         not_implemented_stage('compile', planned_week=8, out_file=out_file)
         return
     func = program.getFunctions()[0]
     out_file.write(func.getMipsCode())
-
+"""
 
 def not_implemented_stage(stage_name, planned_week, out_file=None):
     msg = (f"[main.py] '{stage_name}' is not implemented yet "

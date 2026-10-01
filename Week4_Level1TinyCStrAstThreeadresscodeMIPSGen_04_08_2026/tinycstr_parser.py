@@ -19,7 +19,7 @@ class TinyCStrParser(Parser):
 
     precedence = (
         ('left', 'PLUS', 'MINUS'),
-        ('left', 'TIMES', 'DIVIDE'),
+        ('left', 'TIMES', 'DIVIDE' , 'REMAINDER'),
     )
 
     def __init__(self):
@@ -111,6 +111,12 @@ class TinyCStrParser(Parser):
     @_('expr DIVIDE expr')
     def expr(self, p):
         return BinOp('/', p.expr0, p.expr1)
+
+    @_('expr REMAINDER expr')
+    def expr(self, p):
+        return BinOp('%', p.expr0, p.expr1)
+    
+
 
     @_('LPAREN expr RPAREN')
     def expr(self, p):

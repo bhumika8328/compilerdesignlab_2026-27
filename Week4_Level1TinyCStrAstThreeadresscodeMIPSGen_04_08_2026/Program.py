@@ -26,6 +26,4 @@ class Program:
     def compile(self):
         for function in self.functions:
             function.compile()
-
-
-    
+#FOR mips compile is bcz glbal table only for one program

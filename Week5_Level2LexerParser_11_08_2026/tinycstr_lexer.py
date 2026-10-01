@@ -1,6 +1,6 @@
 """
 TinyCStr Level 2 Lexer (Stages 2a -> 2c)
-
+i
 Read docs/level2_token_reference.md and docs/sly_help2.md
 before editing this file.
 
@@ -21,7 +21,7 @@ class TinyCStrLexer(Lexer):
         # ---- LEVEL 2 (this week) ----
         DOUBLE, REAL_CONST, CHAR, STRING, CHAR_CONST, STRING_CONST,
         LT, GT, LE, GE, EQ, NE, 
-        QUESTION, COLON 
+        QUESTION, COLON
         # week-5, stage-2a: add DOUBLE, REAL_CONST to this set.
         # week-5, stage-2b: add CHAR, STRING, CHARLIT, STRINGLIT,
         #   LT, GT, LE, GE, EQ, NE to this set.
@@ -41,6 +41,9 @@ class TinyCStrLexer(Lexer):
     keywords = {
         'int': 'INT',
         'print': 'PRINT',
+        'double':'DOUBLE',
+        'char':'CHAR',
+        'string':'STRING'
         # TODO(week-5, stage-2a): add 'double': 'DOUBLE'
         # TODO(week-5, stage-2b): add 'char': 'CHAR', 'string': 'STRING'
     }
@@ -50,6 +53,7 @@ class TinyCStrLexer(Lexer):
         t.type = self.keywords.get(t.value, 'ID')
         return t
 
+<<<<<<< ours
     @_(r'\d+')
     def NUMBER(self, t):
         t.value = int(t.value)
@@ -59,6 +63,10 @@ class TinyCStrLexer(Lexer):
     LE=r'<='
     GT=r'>'
     LT=r'<'
+=======
+    
+    
+>>>>>>> theirs
     ASSIGN = r'='
     SEMICOLON = r';'
     LBRACE = r'\{'
@@ -71,6 +79,7 @@ class TinyCStrLexer(Lexer):
     REMAINDER = r'%'
     LPAREN = r'\('
     RPAREN = r'\)'
+
 
     # ------------------------------------------------------------------
     # LEVEL 2, Stage 2a -- real constants
@@ -85,6 +94,7 @@ class TinyCStrLexer(Lexer):
     def REAL_CONST(self, t):
         t.value = float(t.value)
         return t
+<<<<<<< ours
     @_(r"'.'")
     def CHAR_CONST(self,t):
         t.value=float(t.value)
@@ -93,6 +103,13 @@ class TinyCStrLexer(Lexer):
     def STRING_CONST(self,t):
         t.value=t.value[1:-1]
         return t
+=======
+    @_(r'\d+')
+    def NUMBER(self, t):
+        t.value = int(t.value)
+        return t
+
+>>>>>>> theirs
 
     # ------------------------------------------------------------------
     # LEVEL 2, Stage 2b -- char/string constants, relational operators
@@ -100,25 +117,39 @@ class TinyCStrLexer(Lexer):
     # TODO(week-5, stage-2b): CHAR_CONST -- a single character in single
     # quotes, e.g. 'x'. Function-style rule, strip the surrounding
     # quotes before returning (t.value = t.value[1:-1]).
-    #
+    @_(r"'[^']'")
+    def CHAR_CONST(self,t):
+        t.value=t.value[1:-1]
+        return t
     # TODO(week-5, stage-2b): STRING_CONST -- zero or more non-quote
     # characters in double quotes, e.g. "hello". Function-style rule,
     # strip the surrounding quotes the same way. (No escape-sequence
     # handling needed for Level 2 -- \" inside a string is out of scope.)
-    #
+    @_(r'"[^"]*"')
+    def STRING_CONST(self,t):
+        t.value=t.value[1:-1]
+        return t
+
     # TODO(week-5, stage-2b): six relational operators as plain string
     # attributes: LT (<), GT (>), LE (<=), GE (>=), EQ (==), NE (!=).
     # See docs/sly_help2.md #2 for why you do NOT need to
     # worry about `<=` being mis-tokenized as `<` then `=` -- SLY's
     # ordering already handles it correctly as long as these stay plain
     # string attributes (not function rules).
+    LT=r'<'
+    GT=r'>'
+    LE=r'<='
+    GE=r'>='
+    EQ=r'=='
+    NE=r'!='
+    QUESTION=r'\?'
+    COLON=r':'
 
     # ------------------------------------------------------------------
     # LEVEL 2, Stage 2c -- ternary operator tokens
     # ------------------------------------------------------------------
     # TODO(week-5, stage-2c): QUESTION (?) and COLON (:) as plain string
-    # attributes. That's the entire lexer change for Stage 2c 
-
+    # attribute @_(r" '[^']'") 
     def __init__(self, error_sink=None):
         self.error_sink = error_sink if error_sink is not None else sys.stdout
 
